@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Prediction History</title>
+
+<link rel="stylesheet" href="/static/css/style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f4f6f9;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+.history-card{
+margin-top:60px;
+border-radius:15px;
+box-shadow:0px 8px 20px rgba(0,0,0,0.1);
+}
+
+.table th{
+background:#343a40;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-md-10">
+
+<div class="card history-card p-4">
+
+<h3 class="text-center mb-4">Prediction History</h3>
+
+<div class="d-flex justify-content-between mb-3">
+
+<a href="/" class="btn btn-primary">
+New Prediction
+</a>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-striped table-hover">
+
+<thead>
+
+<tr>
+<th>Date</th>
+<th>Hemoglobin</th>
+<th>RBC</th>
+<th>Platelets</th>
+<th>MCV</th>
+<th>MCH</th>
+<th>MCHC</th>
+<th>PDW</th>
+<th>Result</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in rows %}
+
+<tr>
+
+<td>{{ row["created_at"] }}</td>
+<td>{{ row["hemoglobin"] }}</td>
+<td>{{ row["rbc"] }}</td>
+<td>{{ row["platelets"] }}</td>
+<td>{{ row["mcv"] }}</td>
+<td>{{ row["mch"] }}</td>
+<td>{{ row["mchc"] }}</td>
+<td>{{ row["pdw"] }}</td>
+
+<td>
+<span class="badge bg-success">
+{{ row["result"] }}
+</span>
+</td>
+
+<td>
+
+<a href="/delete/{{ row['id'] }}" class="btn btn-danger btn-sm">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
