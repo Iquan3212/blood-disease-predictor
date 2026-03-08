@@ -11,8 +11,7 @@ The system provides predictions, visualizes blood values, stores history, and ge
 - 🧠 Machine Learning Blood Disease Prediction
 - 📊 Blood Parameter Visualization using Chart.js
 - 📁 Prediction History Storage (SQLite Database)
-- 📄 Downloadable PDF Medical Report
-- 🗑 Delete Individual or Full Prediction History
+- 🗑 Delete Individual Prediction History
 - 🎨 Clean Bootstrap UI
 
 ---
