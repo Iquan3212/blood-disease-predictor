@@ -2,7 +2,7 @@ from auth.login import login_bp
 from auth.register import register_bp
 from auth.logout import logout_bp
 from database.db import get_connection
-
+from disease_info import disease_details
 from flask import Flask, request, render_template, session, redirect
 import pickle
 import numpy as np
@@ -11,12 +11,10 @@ app = Flask(__name__)
 
 app.secret_key = "supersecretkey"
 
-# register auth routes
 app.register_blueprint(login_bp)
 app.register_blueprint(register_bp)
 app.register_blueprint(logout_bp)
 
-# load ML model
 model = pickle.load(open("model.pkl", "rb"))
 encoder = pickle.load(open("label_encoder.pkl", "rb"))
 
@@ -24,7 +22,6 @@ encoder = pickle.load(open("label_encoder.pkl", "rb"))
 @app.route("/")
 def home():
 
-    # user must login first
     if "user" not in session:
         return redirect("/login")
 
@@ -48,6 +45,9 @@ def predict():
 
     disease = encoder.inverse_transform([prediction[0]])[0]
 
+    from disease_info import disease_details
+    info = disease_details.get(disease, {})
+
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -70,7 +70,6 @@ def predict():
     conn.commit()
     conn.close()
 
-    # values for chart
     blood_values = [
         hemoglobin,
         rbc,
@@ -84,7 +83,10 @@ def predict():
     return render_template(
         "result.html",
         prediction=disease,
-        blood_values=blood_values
+        blood_values=blood_values,
+        description=info.get("description"),
+        reason=info.get("reason"),
+        precautions=info.get("precautions")
     )
 
 

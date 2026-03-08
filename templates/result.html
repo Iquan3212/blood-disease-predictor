@@ -16,7 +16,7 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 .result-card{
-margin-top:80px;
+margin-top:60px;
 border-radius:15px;
 box-shadow:0px 8px 20px rgba(0,0,0,0.1);
 }
@@ -30,6 +30,11 @@ canvas{
 max-height:350px;
 }
 
+.info-section{
+text-align:left;
+margin-top:25px;
+}
+
 </style>
 
 </head>
@@ -40,7 +45,7 @@ max-height:350px;
 
 <div class="row justify-content-center">
 
-<div class="col-md-8">
+<div class="col-md-9">
 
 <div class="card result-card p-4 text-center">
 
@@ -48,11 +53,42 @@ max-height:350px;
 
 <h3 class="text-danger">{{ prediction }}</h3>
 
+
 <div class="chart-container">
 
 <h5 class="mb-3">Blood Test Visualization</h5>
 
 <canvas id="bloodChart"></canvas>
+
+</div>
+
+<div class="info-section">
+
+<h4>About the Condition</h4>
+<p>{{ description }}</p>
+
+</div>
+
+<div class="info-section">
+
+<h4>Why the Model Predicted This</h4>
+<p>{{ reason }}</p>
+
+</div>
+
+<div class="info-section">
+
+<h4>Recommended Precautions</h4>
+
+<ul>
+
+{% if precautions %}
+{% for item in precautions %}
+<li>{{ item }}</li>
+{% endfor %}
+{% endif %}
+
+</ul>
 
 </div>
 
@@ -77,10 +113,8 @@ View History
 </div>
 
 
-<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Custom Chart Script -->
 <script src="/static/js/charts.js"></script>
 
 <script>
